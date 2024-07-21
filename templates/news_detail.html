@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ news.title }} - Новостной сайт{% endblock %}
+
+{% block content %}
+    <h2>{{ news.title }}</h2>
+    <p>{{ news.description }}</p>
+    <img src="{{ url_for('static', filename=news.image) }}" alt="{{ news.title }}">
+    <p>Дата публикации: {{ news.date }}</p>
+
+    <h3>Комментарии</h3>
+    <ul>
+        {% for comment in news.comments %}
+        {% if comment.is_visible %}
+        <li>
+            <strong>{{ comment.author }}</strong>: {{ comment.text }}
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+
+    <h3>Добавить комментарий</h3>
+    <form method="post">
+        <input type="text" name="author" placeholder="Ваше имя" required>
+        <textarea name="text" placeholder="Ваш комментарий" required></textarea>
+        <button type="submit">Отправить</button>
+    </form>
+{% endblock %}
+
+
